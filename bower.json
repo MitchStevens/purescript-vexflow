@@ -11,20 +11,16 @@
     "output"
   ],
   "dependencies": {
-    "purescript-console": "^0.1.1",
-    "purescript-lists": "^0.7.9",
-    "purescript-arrays": "^0.4.4",
-    "vexflow": "^1.2.41",
-    "purescript-tuples": "^0.4.0",
-    "purescript-generics": "^0.7.2",
-    "purescript-control": "^0.3.2",
-    "purescript-foldable-traversable": "^0.4.2",
-    "purescript-math": "^0.2.0",
-    "purescript-foreign": "^0.7.2",
-    "purescript-midiplayer": "https://github.com/marcoalkema/purescript-midiplayer.git#29df4b8a067e98076c101755c2429a9f07ee77e1",
-    "purescript-partial": "^1.1.0",
-    "purescript-prelude": "^0.1.4",
-    "purescript-transformers": "^0.8.4",
-    "purescript-pux": "^3.1.0"
+    "purescript-prelude": "^4.0.0",
+    "purescript-effect": "2.0.0",
+    "purescript-free": "^5.1.0",
+    "purescript-rationals": "5.0.0",
+    "purescript-partial": "2.0.0",
+    "purescript-arrays": "5.1.0",
+    "purescript-read": "1.0.1",
+    "purescript-console": "4.2.0",
+    "purescript-simple-json": "4.3.0",
+
+    "vexflow": "^1.2.87"
   }
 }

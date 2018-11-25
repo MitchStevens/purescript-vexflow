@@ -1,10 +1,8 @@
-module VexMusic where
+module Vex.VexTypes where
 
-import Prelude
-import Data.Tuple
-import Data.Array (filter)
-import Music
 
+
+{-
 type MidiNote      = Int
 
 type VexAccidental = String
@@ -41,22 +39,6 @@ type VexFlowNote = { pitch     :: Array VexFlowPitch
 type VexVoice = Array VexNote
 type VexBar   = Array VexVoice
 type VexMusic = Array VexBar
-
-pitchToString :: Pitch -> VexPitch
-pitchToString C = "c"
-pitchToString D = "d"
-pitchToString E = "e"
-pitchToString F = "f"
-pitchToString G = "g"
-pitchToString A = "a"
-pitchToString B = "b"
-
-accidentalToString :: Accidental -> VexAccidental
-accidentalToString DoubleFlat  = "bb"
-accidentalToString Flat        = "b"
-accidentalToString Natural     = ""
-accidentalToString Sharp       = "#"
-accidentalToString DoubleSharp = "##"
 
 durationToInt :: Duration -> VexDuration
 durationToInt (Even SixtyFourth)  = 64
@@ -159,5 +141,5 @@ vexBarToIndexedAccidentals = map vexVoiceToIndexedAccidentals
 
 musicWithIndexedAccidentals :: VexMusic -> VexFlowAccidentalMusic
 musicWithIndexedAccidentals = map vexBarToIndexedAccidentals
-
+-}
   
