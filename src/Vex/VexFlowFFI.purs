@@ -51,21 +51,25 @@ foreign import data VexFormatter  :: Type
 foreign import data VexRenderer   :: Type
 foreign import data VexVoice      :: Type
 foreign import data VexStaveNote  :: Type
-foreign import data VexStave :: Type
+foreign import data VexStave      :: Type
+foreign import data VexBeam       :: Type
 
 
 --Boilerplate functions
-foreign import onload :: Effect Unit -> Effect Unit
+foreign import onload 
+  :: forall a. Effect a -> Effect a
 
-foreign import getElement :: String -> Effect HTMLElement
+foreign import getElement 
+  :: String -> Effect HTMLElement
 
-foreign import createRendererSVG :: HTMLElement -> Effect VexRenderer
+foreign import createRendererSVG 
+  :: HTMLElement -> Effect VexRenderer
 
-foreign import createRendererCanvas :: HTMLElement -> Effect VexRenderer
+foreign import createRendererCanvas 
+  :: HTMLElement -> Effect VexRenderer
 
-foreign import resize :: Foreign -> VexRenderer -> Effect VexRenderer
-
-foreign import getContextRenderer :: VexRenderer -> Effect VexContext
+foreign import resize 
+  :: Foreign -> VexRenderer -> Effect VexRenderer
 
 
 --Formatter functions#
@@ -83,6 +87,9 @@ foreign import formatAndDraw
 
 foreign import joinVoices
   :: Array VexVoice -> VexFormatter -> Effect VexFormatter
+
+foreign import getContextRenderer 
+  :: VexRenderer -> Effect VexContext
 
 
 --Stave functions
@@ -154,6 +161,24 @@ foreign import drawVoice
   :: VexVoice -> Effect Unit
 
 
+--Beam functions
+foreign import newBeam
+  :: Array VexStaveNote -> Effect VexBeam
+
+foreign import getContextBeam
+ :: VexBeam -> Effect VexContext
+
+foreign import setContextBeam
+  :: VexContext -> VexBeam -> Effect VexBeam
+
+foreign import generateBeams
+  :: Array VexStaveNote -> Effect (Array VexBeam)
+
+foreign import drawBeam
+  :: VexBeam -> Effect Unit
+
+
+--Class Functions
 class GetContext v where
   getContext
     :: forall s 
@@ -172,11 +197,13 @@ class GetStave v where
 
 class SetStave v where
   setStave
-    :: forall s1 s2
+    :: forall s1 s2 vexStave
      . Nub (HasStave s1) s2
-     => VexStave -> BuildStep s1 s2 v
+     => Buildable vexStave VexStave
+     => vexStave -> BuildStep s1 s2 v
 
 --Instances for vextypes
+--  Voice instances
 instance getContextVexVoice :: GetContext VexVoice where
   getContext = getContextVoice <<< build
 instance setContextVexVoice :: SetContext VexVoice where
@@ -184,12 +211,20 @@ instance setContextVexVoice :: SetContext VexVoice where
 instance getStaveVexVoice :: GetStave VexVoice where
   getStave = getStaveVoice <<< build
 instance setStaveVexVoice :: SetStave VexVoice where
-  setStave stave voice = Builder <$> setStaveVoice stave (build voice)
+  setStave stave voice = Builder <$> setStaveVoice (build stave) (build voice)
 
+--  Stave instances
 instance getContextVexStave :: GetContext VexStave where
   getContext = getContextStave <<< build
 instance setContextVexStave :: SetContext VexStave where
   setContext ctx stave = Builder <$> setContextStave ctx (build stave)
 
+--  Renderer instances
 instance getContextVexRenderer :: GetContext VexRenderer where
   getContext = getContextRenderer <<< build
+
+--  Beams instances
+instance getContextVexBeam :: GetContext VexBeam where
+  getContext = getContextBeam <<< build
+instance setContextVexBeam :: SetContext VexBeam where
+  setContext ctx beam = Builder <$> setContextBeam ctx (build beam)

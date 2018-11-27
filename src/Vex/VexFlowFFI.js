@@ -4,9 +4,7 @@ var VF = require("vexflow").Flow;
 
 exports.onload = function(action){
   return new function() {
-    window.onload = function() {
-      action();
-    };
+    window.onload = action();
   };
 };
 
@@ -17,14 +15,12 @@ exports.getElement = function(div) {
 };
 
 exports.createRendererSVG = function(element) {
-  console.log("createRendererSVGs");
   return function() {
     return new VF.Renderer(element, VF.Renderer.Backends.SVG);
   };
 };
 
 exports.createRendererCanvas = function(element) {
-  console.log("the other thing");
   return function() {
     return new VF.Renderer(element, VF.Renderer.Backends.CANVAS);
   };
@@ -39,16 +35,12 @@ exports.resize = function(dims) {
   };
 };
 
-exports.getContextRenderer = function(renderer) {
-  return function() {
-    return renderer.getContext();
-  };
-};
-
 
 //Formatter functions
 exports.newFormatter = function() {
-  return VF.Formatter();
+  console.log("create formatter");
+  console.log(new VF.Formatter());
+  return new VF.Formatter();
 };
 
 exports.format = function(voices) {
@@ -62,6 +54,7 @@ exports.format = function(voices) {
 };
 
 exports.formatAndDraw = function(context) {
+  console.log("formatAndDraw");
   return function(stave) {
     return function(notes) {
       return function() {
@@ -74,8 +67,15 @@ exports.formatAndDraw = function(context) {
 exports.joinVoices = function(voices) {
   return function(formatter) {
     return function() {
-      formatter.joinVoices(voices);
+      return formatter.joinVoices(voices);
     };
+  };
+};
+
+exports.getContextRenderer = function(renderer) {
+  return function() {
+    console.log("ctx" + renderer.getContext());
+    return renderer.getContext();
   };
 };
 
@@ -186,6 +186,40 @@ exports.addDotToAll = function(stave) {
 };
 
 
+//Beam functions
+exports.newBeam = function(notes) {
+  return function() {
+    return new VF.Beam(notes);
+  };
+};
+
+exports.getContextBeam = function(beam) {
+  return function() {
+    return beam.getContext();
+  };
+};
+
+exports.setContextBeam = function (ctx) {
+  return function(beam) {
+    return function() {
+      return beam.setContext(ctx);
+    };
+  };
+};
+
+exports.generateBeams = function(notes) {
+  return function() {
+    return VF.Beam.generateBeams(notes);
+  };
+};
+
+exports.drawBeam = function(beam) {
+  return function() {
+    beam.draw();
+  }
+}
+
+
 //Voice functions
 exports.newVoice = function(timeSignature) {
   return function() {
@@ -223,7 +257,7 @@ exports.getContextVoice = function(voice) {
 exports.setContextVoice = function(context) {
   return function(voice) {
     return function() {
-      return stave.setContext(context);
+      return voice.setContext(context);
     };
   };
 };
@@ -242,13 +276,9 @@ exports.setStaveVoice = function(stave) {
   };
 };
 
-exports.drawVoice = function(context) {
-  console.log("drawVoice");
-  return function(stave) {
-    return function(voice) {
-      return function() {
-        voice.draw(context, stave);
-      };
-    };
-  };
+exports.drawVoice = function(voice) {
+  return function() {
+    console.log("drawVoice");
+    voice.draw(voice.context, voice.stave);
+  }; 
 };

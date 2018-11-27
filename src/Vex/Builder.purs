@@ -16,8 +16,15 @@ type IsRendered r = ( rendered :: Rendered | r )
 
 data Builder (s :: # Type) x = Builder x
 
-build :: forall s x. Builder s x -> x
-build (Builder x) = x
+
+class Buildable b x | b -> x where
+  build :: b -> x
+
+instance builderBuilder :: Buildable (Builder s x) x where
+  build (Builder x) = x
+else
+instance builderIdentity :: Buildable a a where
+  build  = identity
 
 instance functorBuilder :: Functor (Builder s) where
   map f (Builder x) = Builder (f x)

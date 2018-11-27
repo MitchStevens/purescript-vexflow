@@ -4,20 +4,31 @@ import Prelude
 import Vex.Types
 
 import Effect (Effect)
+import Vex.Builder (class Buildable, build)
 import Vex.VexFlowFFI (VexContext, VexFormatter, VexStave, VexStaveNote, VexVoice)
 import Vex.VexFlowFFI as FFI
 
 newFormatter :: Effect VexFormatter
 newFormatter = FFI.newFormatter
 
-format :: Array VexVoice -> Number -> VexFormatter -> Effect VexFormatter
-format = FFI.format
+format 
+  :: forall vexVoice
+   . Buildable vexVoice VexVoice
+   => Array vexVoice -> Number -> VexFormatter -> Effect VexFormatter
+format voices = FFI.format (map build voices)
 
 --formatToStave TODO::
 
-formatAndDraw :: VexContext -> VexStave -> Array VexStaveNote -> Effect Unit
-formatAndDraw = FFI.formatAndDraw
+formatAndDraw
+  :: forall vexStave
+   . Buildable vexStave VexStave
+  => VexContext -> vexStave -> Array VexStaveNote -> Effect Unit
+formatAndDraw ctx stave notes =
+  FFI.formatAndDraw ctx (build stave) notes
 
 
-joinVoices :: Array VexVoice -> VexFormatter -> Effect VexFormatter
-joinVoices = FFI.joinVoices
+joinVoices
+  :: forall vexVoice
+   . Buildable vexVoice VexVoice
+  => Array vexVoice -> VexFormatter -> Effect VexFormatter
+joinVoices voices = FFI.joinVoices (map build voices)

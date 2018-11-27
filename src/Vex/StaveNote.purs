@@ -20,17 +20,17 @@ import Vex.VexFlowFFI as FFI
 note :: Clef -> Array Note -> Duration -> Effect VexStaveNote
 note clef keys duration = FFI.newStaveNote (writeImpl {clef, keys, duration})
 
-addAccidental :: forall s. Int -> Accidental -> BuildStep s s VexStaveNote
-addAccidental n acc = traverse $ FFI.addAccidental n (writeImpl acc)
+addAccidental :: Int -> Accidental -> VexStaveNote -> Effect VexStaveNote
+addAccidental n acc = FFI.addAccidental n (writeImpl acc)
 
-addArticulation :: forall s. Int -> Articulation -> BuildStep s s VexStaveNote
-addArticulation n art = traverse $ FFI.addArticulation n (writeImpl art)
+addArticulation :: Int -> Articulation -> VexStaveNote -> Effect VexStaveNote
+addArticulation n art = FFI.addArticulation n (writeImpl art)
 
 -- addAnnotation :: Annotation -> Free StaveNoteF Unit
 -- addAnnotation ann = liftF (AddAnnotation ann unit)
 
-addDot :: forall s. Int -> BuildStep s s VexStaveNote
-addDot n = traverse $ FFI.addDot n
+addDot :: Int -> VexStaveNote -> Effect VexStaveNote
+addDot n = FFI.addDot n
 
-addDotToAll :: forall s. BuildStep s s VexStaveNote
-addDotToAll = traverse FFI.addDotToAll
+addDotToAll :: VexStaveNote -> Effect VexStaveNote
+addDotToAll = FFI.addDotToAll

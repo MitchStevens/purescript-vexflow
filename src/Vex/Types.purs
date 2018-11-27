@@ -54,7 +54,7 @@ instance showAccidental :: Show Accidental where
   show = case _ of
     DoubleFlat -> "bb"
     Flat -> "b"
-    Natural -> ""
+    Natural -> "n"
     Sharp -> "#"
     DoubleSharp -> "##"
 instance writeAccidental :: WriteForeign Accidental where

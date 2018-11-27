@@ -6,7 +6,6 @@ import Type.Row
 import Vex.Builder
 import Vex.Types
 
-import Control.Monad.Except (ExceptT(..))
 import Data.Traversable (traverse)
 import Effect (Effect)
 import Simple.JSON (writeImpl)
@@ -18,7 +17,7 @@ import Vex.VexFlowFFI as FFI
 
 
 newVoice :: Voice -> Effect (Builder () VexVoice)
-newVoice voice = Builder <$> FFI.newVoice (writeImpl voice)
+newVoice voice = Builder <$> FFI.newVoice (writeImpl voice) 
 
 addTickable :: forall s. VexStaveNote -> BuildStep s s VexVoice
 addTickable note = traverse (FFI.addTickable note)
@@ -37,4 +36,4 @@ drawVoice
   :: forall s
    . Builder ( HasContext + HasStave + s ) VexVoice 
   -> Effect Unit
-drawVoice (Builder x) = FFI.drawVoice x
+drawVoice (Builder voice) = FFI.drawVoice voice
