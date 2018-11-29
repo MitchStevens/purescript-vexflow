@@ -29,7 +29,6 @@ exports.createRendererCanvas = function(element) {
 exports.resize = function(dims) {
   return function(renderer) {
     return function() {
-      console.log(renderer.resize(dims.width, dims.height));
       return renderer.resize(dims.width, dims.height);
     };
   };
@@ -38,8 +37,6 @@ exports.resize = function(dims) {
 
 //Formatter functions
 exports.newFormatter = function() {
-  console.log("create formatter");
-  console.log(new VF.Formatter());
   return new VF.Formatter();
 };
 
@@ -74,7 +71,6 @@ exports.joinVoices = function(voices) {
 
 exports.getContextRenderer = function(renderer) {
   return function() {
-    console.log("ctx" + renderer.getContext());
     return renderer.getContext();
   };
 };
@@ -82,8 +78,6 @@ exports.getContextRenderer = function(renderer) {
 
 //Stave functions
 exports.newStave = function(s) {
-  console.log("newStave");
-  console.log(new VF.Stave(s.x, s.y, s.width));
   return function() {
     return new VF.Stave(s.x, s.y, s.width);
   };
@@ -108,7 +102,6 @@ exports.addKeySignature = function(key) {
 exports.addTimeSignature = function(time) {
   return function(stave) {
     return function() {
-      console.log(time)
       return stave.setTimeSignature(time);
     };
   };
@@ -116,16 +109,13 @@ exports.addTimeSignature = function(time) {
 
 exports.getContextStave = function(stave) {
   return function() {
-    stave.getContext();
+    return stave.getContext();
   };
 };
 
 exports.setContextStave = function(context) {
   return function(stave) {
     return function() {
-      console.log("set5COntxt");
-      console.log(context);
-      console.log(stave);
       return stave.setContext(context);
     };
   };
@@ -140,7 +130,6 @@ exports.drawStave = function(stave) {
 
 //StaveNote functions
 exports.newStaveNote = function(note) {
-  console.log("dddd");
   return function() {
     return new VF.StaveNote(note);
   };
@@ -223,11 +212,7 @@ exports.drawBeam = function(beam) {
 //Voice functions
 exports.newVoice = function(timeSignature) {
   return function() {
-    console.log("new voice +-+-+");
-    console.log(timeSignature);
-    var x = new VF.Voice(timeSignature);
-    console.log(x);
-    return x;
+    return new VF.Voice(timeSignature);
   };
 };
 
@@ -242,15 +227,14 @@ exports.addTickable = function(note) {
 exports.addTickables = function(notes) {
   return function(voice) {
     return function() {
-      var v = voice.addTickables(notes);
-      return v;
+      return voice.addTickables(notes);
     };
   };
 };
 
 exports.getContextVoice = function(voice) {
   return function() {
-    stave.getContext();
+    return stave.getContext();
   };
 };
 
@@ -278,7 +262,6 @@ exports.setStaveVoice = function(stave) {
 
 exports.drawVoice = function(voice) {
   return function() {
-    console.log("drawVoice");
     voice.draw(voice.context, voice.stave);
   }; 
 };

@@ -21,6 +21,8 @@
     "purescript-read": "1.0.1",
     "purescript-console": "4.2.0",
     "purescript-simple-json": "4.3.0",
+    "purescript-typelevel": "4.0.0",
+    "purescript-sized-vectors": "3.1.0",
 
     "vexflow": "^1.2.87"
   },

@@ -2,7 +2,9 @@ module Vex.Builder where
 
 import Prelude
 
-import Data.Traversable (class Foldable, class Traversable, foldlDefault, foldrDefault, sequenceDefault, traverse)
+import Data.Typelevel.Num
+import Data.Traversable (class Foldable, class Traversable)
+
 import Effect (Effect)
 import Vex.Types
 
@@ -12,10 +14,10 @@ data Rendered
 
 type HasContext r = ( hasContext :: ProvidedContext | r )
 type HasStave r   = ( providedStave :: ProvidedStave | r )
-type IsRendered r = ( rendered :: Rendered | r ) 
+type IsRendered r = ( rendered :: Rendered | r )
+type Sized n r = ( sized :: n | r )
 
 data Builder (s :: # Type) x = Builder x
-
 
 class Buildable b x | b -> x where
   build :: b -> x

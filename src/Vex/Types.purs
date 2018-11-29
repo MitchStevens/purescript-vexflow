@@ -192,12 +192,12 @@ instance showDurationType :: Show DurationType where
     RestD -> "r"
 
 data Duration
-  = Dotted Duration DurationType
+  = Dotted Duration
   | Tuplet Irregular DurationType
-  | Duration Rational DurationType
+  | Duration Regular DurationType
 instance showDuration :: Show Duration where
   show = case _ of
-    Dotted duration dtype -> show duration <> show dtype
+    Dotted duration -> show duration <> "d"
     Tuplet irregular dtype -> show irregular <> show dtype
     Duration regular dtype -> show regular <> show dtype
 instance writeDuration :: WriteForeign Duration where

@@ -11,6 +11,8 @@ import Prelude
 import Vex.Types
 
 import Data.Traversable (traverse)
+import Data.Typelevel.Num (class Nat, class Pos)
+import Data.Vec (Vec)
 import Effect (Effect)
 import Simple.JSON (writeImpl)
 import Vex.Builder (BuildStep)
