@@ -1,6 +1,7 @@
 {
   "name": "purescript-vexflow",
-  "version": "1.0.0",
+  "description": "bindings for vexflow",
+  "version": "0.1.0",
   "moduleType": [
     "node"
   ],
@@ -22,5 +23,13 @@
     "purescript-simple-json": "4.3.0",
 
     "vexflow": "^1.2.87"
+  },
+  "keywords": ["vexflow", "vex"],
+  "authors": [
+    "Mitch Stevens"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/MitchStevens/purescript-vexflow"
   }
 }
